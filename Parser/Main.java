@@ -35,7 +35,8 @@ public class Main {
     }
 
     private static String readFile(String[] path){
-        String allText = "";
+
+        StringBuffer sb = new StringBuffer();
         for(int i = 0; i < path.length; i++)
             {
             String FILENAME = path[i];
@@ -44,8 +45,6 @@ public class Main {
             FileReader fr = null;
 
             try {
-
-                //br = new BufferedReader(new FileReader(FILENAME));
                 fr = new FileReader(FILENAME);
                 br = new BufferedReader(fr);
 
@@ -54,8 +53,7 @@ public class Main {
                 while ((sCurrentLine = br.readLine()) != null) {
                     if(sCurrentLine.trim().startsWith("Warning") || sCurrentLine.trim().startsWith("Asset"));
                     else
-                        allText += sCurrentLine + "\n";
-
+                        sb.append(sCurrentLine + "\n");
                 }
 
             } catch (IOException e) {
@@ -80,7 +78,7 @@ public class Main {
 
             }
         }
-        return allText;
+        return sb.toString();
     }
 
     private static HashSet<String> transactionFilter(String allText){
@@ -95,12 +93,12 @@ public class Main {
 
     private static String getIDfromString(String temp){
         String[] array = temp.split("Captured transactions: ");
-        String result = "";
+        StringBuffer result = new StringBuffer();
         for(int i = 1; i < array.length; i++){
-            result += array[i].trim();
-            result += ",";
+            result.append(array[i].trim());
+            result.append(",");
         }
-        return result;
+        return result.toString();
     }
 
     private static Date convertStringToDate(String d) throws ParseException{
@@ -154,15 +152,15 @@ public class Main {
     private static HashMap<Date, String> stringConcatinator (ArrayList<Date> col, HashSet<String> filteredFile) throws ParseException{
         HashMap<Date, String> result = new HashMap<>();
             for(int i = 0; i < col.size() - 1; i++){
-                String temp = "";
+                StringBuffer temp = new StringBuffer();
                 for(String date : filteredFile) {
                     Date newDate = convertStringToDate(date);
                     if (newDate.compareTo(col.get(i)) >= 0 && newDate.compareTo(col.get(i + 1)) < 0){
-                        temp += getIDfromString(date);
+                        temp.append(getIDfromString(date));
                     }
                 }
                 if(!temp.equals(""))
-                    result.put(col.get(i), temp);
+                    result.put(col.get(i), temp.toString());
             }
         return result;
     }
@@ -208,20 +206,21 @@ public class Main {
 
         try {
 
-            String content = "";
+            //String content = "";
+            StringBuffer content = new StringBuffer();
 
             for(Date d : collection){
                 if(beforeResult.get(d) != null){
-                content += convertDateToString(d) + " - " + convertDateToString(addDaysToDate(d, amountOfDaysInSegment - 1)) + "\n";
+                content.append(convertDateToString(d) + " - " + convertDateToString(addDaysToDate(d, amountOfDaysInSegment - 1)) + "\n");
                 for(String t : beforeResult.get(d).keySet())
-                    content += t + ": " + beforeResult.get(d).get(t) + ", ";
-                content += "\n\n";
+                    content.append(t + ": " + beforeResult.get(d).get(t) + ", ");
+                content.append("\n\n");
                 }
             }
 
             fw = new FileWriter(pathToTheFile);
             bw = new BufferedWriter(fw);
-            bw.write(content);
+            bw.write(content.toString());
 
             System.out.println("Done");
 
