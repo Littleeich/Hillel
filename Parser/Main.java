@@ -192,6 +192,9 @@ public class Main {
     }
 
     private static void putResultToTheConsole(ArrayList<Date> collection, HashMap<Date, HashMap<String, Integer>> beforeResult){
+        
+        //Merge with similalr code in the method putResultToTheFile
+
         for(Date d : collection){
             if(beforeResult.get(d) != null){
             System.out.println(convertDateToString(d) + " - " + convertDateToString(addDaysToDate(d, amountOfDaysInSegment - 1)));
