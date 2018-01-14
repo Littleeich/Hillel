@@ -15,6 +15,8 @@ public class Main {
 
     public static void main(String[] args) throws ParseException {
 
+        // PLEASE MAKE AUTOMATIC LOG FILE DETECTION WITHIN SUPPLIED FOLDER
+
         ArrayList<String> pathToFiles = new ArrayList<>();
         pathToFiles.add("C:\\Users\\Eich\\Downloads\\transactionsLog_0.txt");
         pathToFiles.add("C:\\Users\\Eich\\Downloads\\transactionsLog_1.txt");
