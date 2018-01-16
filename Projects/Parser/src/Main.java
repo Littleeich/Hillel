@@ -7,31 +7,50 @@ import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
+import java.io.FileFilter;
 
 public class Main {
     public static int amountOfDaysInSegment = 14;
 
     public static void main(String[] args) throws ParseException {
 
-        // PLEASE MAKE AUTOMATIC LOG FILE DETECTION WITHIN SUPPLIED FOLDER
-
-        ArrayList<String> pathToFiles = new ArrayList<>();
-        pathToFiles.add("C:\\Users\\Eich\\Downloads\\transactionsLog_0.txt");
-        pathToFiles.add("C:\\Users\\Eich\\Downloads\\transactionsLog_1.txt");
+        ArrayList<String> pathToFiles = findAlllogs("C:\\Users\\Eich\\Downloads\\");
+//        ArrayList<String> pathToFiles = findAlllogs(args[0]);
         String[] path = pathToFiles.toArray(new String[pathToFiles.size()]);
-//        String[] path = args;
-
+        
         ArrayList<Date> dateCollect;
         HashSet<String> filteredFile = transactionFilter(readFile(path));
 
         dateCollect = dateCollection(filteredFile, amountOfDaysInSegment);
-//        System.out.println(dateCollect);
 
         HashMap<Date, HashMap<String, Integer>> beforeResult;
         beforeResult = parseLogReader(stringConcatinator(dateCollect, filteredFile));
         putResultToTheConsole(dateCollect, beforeResult);
         putResultToTheFile("C:\\Users\\Eich\\IdeaProjects\\Lesson4\\file404.txt", dateCollect, beforeResult);
 
+    }
+
+    private static ArrayList<String> findAlllogs(String dirPath){
+        ArrayList<String> pathToFiles = new ArrayList<>();
+
+        File dir = new File(dirPath);
+        try{
+            if(dir.isDirectory())
+            {
+                // получаем все вложенные объекты в каталоге
+                for(File item : dir.listFiles()){
+
+                    if(item.isFile()){
+                        if(item.getName().contains("transactionsLog"))
+                            pathToFiles.add(item.getAbsolutePath());
+                    }
+                }
+            }
+        } catch (NullPointerException e){
+            throw new NullPointerException ("\nThere is no directory by the given path!\n");
+        }
+        return pathToFiles;
     }
 
     private static String readFile(String[] path){
