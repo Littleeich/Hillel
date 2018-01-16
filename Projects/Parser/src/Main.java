@@ -189,18 +189,25 @@ public class Main {
         return parseResult;
     }
 
-    private static void putResultToTheConsole(ArrayList<Date> collection, HashMap<Date, HashMap<String, Integer>> beforeResult){
-        
-        //Merge with similalr code in the method putResultToTheFile
+    public static  StringBuffer convertResultToTheRightFormat(ArrayList<Date> collection, HashMap<Date, HashMap<String, Integer>> beforeResult){
+        StringBuffer content = new StringBuffer();
 
         for(Date d : collection){
             if(beforeResult.get(d) != null){
-            System.out.println(convertDateToString(d) + " - " + convertDateToString(addDaysToDate(d, amountOfDaysInSegment - 1)));
-            for(String t : beforeResult.get(d).keySet())
-                System.out.print(t + ": " + beforeResult.get(d).get(t) + ", ");
-            System.out.println("\n\n");
+                content.append(convertDateToString(d) + " - " + convertDateToString(addDaysToDate(d, amountOfDaysInSegment - 1)) + "\n");
+                for(String t : beforeResult.get(d).keySet())
+                    content.append(t + ": " + beforeResult.get(d).get(t) + ", ");
+                content.append("\n\n");
             }
         }
+        return content;
+    }
+
+    private static void putResultToTheConsole(ArrayList<Date> collection, HashMap<Date, HashMap<String, Integer>> beforeResult){
+
+        StringBuffer content = convertResultToTheRightFormat(collection, beforeResult);
+
+        System.out.println(content);
     }
 
     private static void putResultToTheFile(String pathToTheFile, ArrayList<Date> collection, HashMap<Date, HashMap<String, Integer>> beforeResult){
@@ -210,16 +217,7 @@ public class Main {
         try {
 
             //String content = "";
-            StringBuffer content = new StringBuffer();
-
-            for(Date d : collection){
-                if(beforeResult.get(d) != null){
-                content.append(convertDateToString(d) + " - " + convertDateToString(addDaysToDate(d, amountOfDaysInSegment - 1)) + "\n");
-                for(String t : beforeResult.get(d).keySet())
-                    content.append(t + ": " + beforeResult.get(d).get(t) + ", ");
-                content.append("\n\n");
-                }
-            }
+            StringBuffer content = convertResultToTheRightFormat(collection, beforeResult);
 
             fw = new FileWriter(pathToTheFile);
             bw = new BufferedWriter(fw);
