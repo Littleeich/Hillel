@@ -18,7 +18,7 @@ public class Main {
         ArrayList<String> pathToFiles = findAlllogs("C:\\Users\\Eich\\Downloads\\");
 //        ArrayList<String> pathToFiles = findAlllogs(args[0]);
         String[] path = pathToFiles.toArray(new String[pathToFiles.size()]);
-        
+
         ArrayList<Date> dateCollect;
         HashSet<String> filteredFile = transactionFilter(readFile(path));
 
@@ -48,7 +48,7 @@ public class Main {
                 }
             }
         } catch (NullPointerException e){
-            throw new NullPointerException ("\nThere is no directory by the given path!\n");
+            throw new NullPointerException ("\nThere is a path to the file, but you had to give directory path\n");
         }
         return pathToFiles;
     }
