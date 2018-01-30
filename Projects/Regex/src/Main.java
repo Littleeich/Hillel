@@ -12,10 +12,10 @@ public class Main {
     }
 
     public static boolean checkNotLessThan1450(String str){
-        return str.matches("(?:(?:\\d{5,}|145[\\d]|14[6-9][0-9]|1[5-9]\\d{2}|[2-9]\\d{3})(?:.\\d+)?,? ?)+[^.\\w\\d]");
+        return str.matches("(?:(?:\\d{5,}|[2-9]\\d{3}|1[5-9]\\d{2}|14[6-9][0-9]|145[\\d])(?:.\\d+)?,? ?)+[^.\\w\\d]");
     }
 
     public static boolean checkFrom0To100 (String str){
-        return str.matches("((?:100|\\d{1,2})(?:\\.\\d+)?,? ?)+");
+        return str.matches("((?:\\d{1,2}|100)(?:\\.\\d+)?,? ?)+");
     }
 }
