@@ -24,7 +24,7 @@ public class Main {
     }
 
     public static boolean checkFrom0To100 (String str){
-        return str.matches("^(?:\\d{1,2}|100)(?:\\.\\d+)? $");
+        return str.matches("^(?:\\d{1,2}|100)(?:\\.\\d+)?,? ?$");
     }
 
     public static void unitTestForEmailTrue(String data) {
