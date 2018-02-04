@@ -7,24 +7,33 @@ public class Reader {
 
         DataLog r = new DataLog();
 
-        String inlineArray[] = r.inline.split("\n");
-        for (String i : inlineArray)
-            System.out.println(LogCleaner(i));
+        System.out.println(LogCleaner(r.inline));
 }
 
-    public static StringBuffer LogCleaner(String inline){
+    public static String LogCleaner(String inline){
+        StringBuffer temp = new StringBuffer();
+
+        String inlineArray[] = inline.split("\n");
+        for (String i : inlineArray)
+            temp.append(LineCleaner(i) + "\n");
+
+        return temp.toString();
+    }
+
+    public static String LineCleaner(String inline){
         String[] tags = {"Login Username", "Data Object", "Records", "User Action", "User Action Status", "Labels", "Service type",
                 "Mapping Ids", "URI"};
 
         StringBuffer temp = new StringBuffer();
+        try {temp.append(inline.substring(0, inline.indexOf("skyfence")));}
+            catch (Exception e) {return "";}
 
-        temp.append(inline.substring(0, inline.indexOf("skyfence")));
         for(String t : tags){
             Pattern pattern = Pattern.compile("\\[" + t + "[^\\]]+\\]");
             Matcher matcher = pattern.matcher(inline);
             if(matcher.find())
                 temp.append(matcher.group());
         }
-        return temp;
+        return temp.toString();
     }
 }
