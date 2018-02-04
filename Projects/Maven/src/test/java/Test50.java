@@ -3,7 +3,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class Test50{
-    
+
     @DataProvider(name = "emails")
     public Object[][] createData1() {
         return new Object[][] {
