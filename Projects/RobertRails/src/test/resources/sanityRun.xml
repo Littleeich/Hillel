@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Sanity Suite" verbose="0" group-by-instances="true">
+    <listeners>
+        <listener class-name="hillelauto.listeners.RetryListener"/>
+        <listener class-name="hillelauto.listeners.TestListener"/>
+    </listeners>
+    <test name="Sanity" verbose="1" group-by-instances="true">
+        <parameter name="testRailProjectId" value="8"/>
+        <parameter name="testRailRunPrefix" value="Jira"/>
+        <groups>
+            <run>
+                <exclude name="disabled"/>
+                <include name="Sanity"/>
+                <include name="TestRailReport"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="hillelauto.jira"/>
+        </packages>
+        <!-- <classes>
+            <class name="hillelauto.jira.JiraTests">
+        </classes> -->
+    </test>
+</suite>
+<!-- mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/sanityRun.xml -->
